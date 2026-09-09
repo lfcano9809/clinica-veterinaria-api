@@ -1,7 +1,9 @@
 package com.veterinaria.veterinaria.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
+
 @Entity
 @Table(name = "veterinarios")
 public class Veterinario {
@@ -16,12 +18,15 @@ public class Veterinario {
     private String correo;
 
     @ManyToMany(mappedBy = "veterinarios")
+    @JsonIgnore
     private List<Mascota> mascotas;
 
     public Veterinario() {
     }
 
-    public Veterinario(Long id, String nombre, String tarjetaProfesional, String especialidad, String correo, List<Mascota> mascotas) {
+    public Veterinario(Long id, String nombre, String tarjetaProfesional,
+                       String especialidad, String correo,
+                       List<Mascota> mascotas) {
         this.id = id;
         this.nombre = nombre;
         this.tarjetaProfesional = tarjetaProfesional;

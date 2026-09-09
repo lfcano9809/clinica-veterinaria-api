@@ -1,4 +1,6 @@
 package com.veterinaria.veterinaria.Entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -19,6 +21,16 @@ public class HistoriaClinica {
     private Mascota mascota;
 
     public HistoriaClinica() {
+    }
+
+    public HistoriaClinica(Long id, LocalDate fechaApertura,
+                           String antecedentes, String observaciones,
+                           Mascota mascota) {
+        this.id = id;
+        this.fechaApertura = fechaApertura;
+        this.antecedentes = antecedentes;
+        this.observaciones = observaciones;
+        this.mascota = mascota;
     }
 
     public Long getId() {
@@ -59,5 +71,16 @@ public class HistoriaClinica {
 
     public void setMascota(Mascota mascota) {
         this.mascota = mascota;
+    }
+
+    @Override
+    public String toString() {
+        return "HistoriaClinica{" +
+                "id=" + id +
+                ", fechaApertura=" + fechaApertura +
+                ", antecedentes='" + antecedentes + '\'' +
+                ", observaciones='" + observaciones + '\'' +
+                ", mascota=" + mascota +
+                '}';
     }
 }

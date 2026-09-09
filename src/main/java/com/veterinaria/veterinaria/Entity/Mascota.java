@@ -1,5 +1,6 @@
 package com.veterinaria.veterinaria.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -7,36 +8,39 @@ import java.util.List;
 @Table(name = "mascotas")
 public class Mascota {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-private String nombre;
-private String especie;
-private String raza;
-private String edad;
-private double peso;
+    private String nombre;
+    private String especie;
+    private String raza;
+    private String edad;
+    private double peso;
 
-@ManyToOne
-@JoinColumn(name = "propietario_id")
+    @ManyToOne
+    @JoinColumn(name = "propietario_id")
+    private Propietario propietario;
 
-private Propietario propietario;
+    @OneToOne(mappedBy = "mascota")
+    @JsonIgnore
+    private HistoriaClinica historiaClinica;
 
-@OneToOne(mappedBy = "mascota")
-private HistoriaClinica historiaClinica;
-
-@ManyToMany
-@JoinTable(
-        name = "mascota_veterinario",
-        joinColumns = @JoinColumn(name = "mascota_id"),
-        inverseJoinColumns = @JoinColumn(name = "veterinario_id")
-)
+    @ManyToMany
+    @JoinTable(
+            name = "mascota_veterinario",
+            joinColumns = @JoinColumn(name = "mascota_id"),
+            inverseJoinColumns = @JoinColumn(name = "veterinario_id")
+    )
     private List<Veterinario> veterinarios;
 
     public Mascota() {
     }
 
-    public Mascota(Long id, String nombre, String especie, String raza, String edad, double peso, Propietario propietario, HistoriaClinica historiaClinica, List<Veterinario> veterinarios) {
+    public Mascota(Long id, String nombre, String especie, String raza,
+                   String edad, double peso, Propietario propietario,
+                   HistoriaClinica historiaClinica,
+                   List<Veterinario> veterinarios) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
